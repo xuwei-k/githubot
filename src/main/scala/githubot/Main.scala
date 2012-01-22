@@ -24,8 +24,8 @@ object Main{
         val newData = o.filterNot{a => oldIds.contains(a.id)}
         db.insert(newData.map{_.id}:_*)
         newData.reverse.foreach{ Thread.sleep(500) ; client.tweet }
-        Thread.sleep(conf.interval.inMillis)
       }
+      Thread.sleep(conf.interval.inMillis)
     }
   }
 
