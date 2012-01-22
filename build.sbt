@@ -1,5 +1,7 @@
 name := "githubot"
 
+version := "0.1"
+
 resolvers ++= Seq(
   "twitter repository"   at "http://maven.twttr.com"
  ,"twitter4j repository" at "http://twitter4j.org/maven2"
