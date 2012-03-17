@@ -15,18 +15,44 @@ object Main{
   }
 
   def run(conf:Config){
-    val db = new DB[UserActionID](conf.dbSize)
-    val client = TweetClient(conf.twitter)
-    while(true){
-      allCatchPrintStackTrace{
-        val o = (xml.XML.load(conf.rss) \ "entry").map{ UserAction.apply }
-        val oldIds = db.selectAll
-        val newData = o.filterNot{a => oldIds.contains(a.id)}
-        db.insert(newData.map{_.id}:_*)
-        newData.reverse.foreach{ Thread.sleep(500) ; client.tweet }
+    import conf._
+    val db = new DB[UserActionID](dbSize)
+    val client = TweetClient(twitter)
+    def tweet(data:Seq[UserAction]){
+      data.reverseIterator.foreach{ e =>
+        Thread.sleep(tweetInterval.inMillis)
+        client.tweet(e)
       }
-      Thread.sleep(conf.interval.inMillis)
     }
-  }
 
+    def getUserActions = (xml.XML.load(rss) \ "entry").map{ UserAction.apply }
+
+    val firstData = getUserActions
+    db.insert(firstData.map{_.id}:_*)
+    if(firstTweet){
+      tweet(firstData)
+    }
+
+    @annotation.tailrec
+    def _run(){
+      Thread.sleep(interval.inMillis)
+      try{
+        val oldIds = db.selectAll
+        val newData = getUserActions.filterNot{a => oldIds.contains(a.id)}
+        db.insert(newData.map{_.id}:_*)
+        tweet(newData)
+      }catch{
+        case e =>
+          e.printStackTrace
+          mail.foreach{c =>
+            allCatchPrintStackTrace{
+              println(Mail(e.getMessage,e.getStackTrace.mkString("\n"),c))
+            }
+          }
+      }
+      _run()
+    }
+
+    _run()
+  }
 }

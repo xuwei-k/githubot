@@ -10,4 +10,5 @@ package object githubot{
   }
 
   type UserActionID = String
+  type URL = java.net.URL
 }
