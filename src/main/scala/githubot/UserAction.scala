@@ -15,10 +15,10 @@ case class UserAction(
 object UserAction{
   def apply(rawData:xml.Node):UserAction = {
     UserAction(
-      (rawData \ "id").text,
-      (rawData \\ "@href").text,
-      (rawData \ "title").text,
-      (rawData \ "published").text
+      (rawData \ "id").text.trim,
+      (rawData \\ "@href").text.trim,
+      (rawData \ "title").text.trim,
+      (rawData \ "published").text.trim
     )
   }
 }
