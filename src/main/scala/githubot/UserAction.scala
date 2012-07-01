@@ -16,7 +16,7 @@ object UserAction{
   def apply(rawData:xml.Node):UserAction = {
     UserAction(
       (rawData \ "id").text.trim,
-      (rawData \\ "@href").text.trim,
+      (rawData \ "link" \ "@href").text.trim,
       (rawData \ "title").text.trim,
       (rawData \ "published").text.trim
     )
