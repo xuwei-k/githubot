@@ -19,7 +19,7 @@ object Main{
     val db = new DB[UserActionID](dbSize)
     val client = TweetClient(twitter)
     def tweet(data:Seq[UserAction]){
-      data.reverseIterator.foreach{ e =>
+      data.reverseIterator.filter{conf.filter}.foreach{ e =>
         Thread.sleep(tweetInterval.inMillis)
         client.tweet(e)
       }
