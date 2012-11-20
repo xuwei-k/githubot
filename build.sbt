@@ -7,13 +7,13 @@ resolvers ++= Seq(
  ,"twitter4j repository" at "http://twitter4j.org/maven2"
 )
 
-scalaVersion := "2.9.1"
+scalaVersion := "2.9.2"
 
 libraryDependencies ++= Seq(
-  "org.twitter4j" % "twitter4j-core" % "2.2.5"
- ,"com.twitter" %% "util-eval" % "3.0.0"
- ,"org.specs2"  %% "specs2" % "1.10" % "test"
- ,"org.scalaj"  %% "scalaj-http" % "0.3.1"
+  "org.twitter4j" % "twitter4j-core" % "2.2.6"
+ ,"com.twitter" % "util-eval" % "5.3.13"
+ ,"org.specs2"  %% "specs2" % "1.12.3" % "test"
+ ,"org.scalaj"  %% "scalaj-http" % "0.3.2"
 )
 
 scalacOptions += "-deprecation"
