@@ -10,7 +10,7 @@ resolvers ++= Seq(
 scalaVersion := "2.9.2"
 
 libraryDependencies ++= Seq(
-  "org.twitter4j" % "twitter4j-core" % "3.0.0"
+  "org.twitter4j" % "twitter4j-core" % "3.0.1"
  ,"com.twitter" % "util-eval" % "5.3.13"
  ,"org.specs2"  %% "specs2" % "1.12.3" % "test"
  ,"org.scalaj"  %% "scalaj-http" % "0.3.2"
