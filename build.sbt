@@ -3,15 +3,17 @@ name := "githubot"
 version := "0.2-SNAPSHOT"
 
 resolvers ++= Seq(
-  "twitter repository"   at "http://maven.twttr.com"
- ,"twitter4j repository" at "http://twitter4j.org/maven2"
+//  "twitter repository"   at "http://maven.twttr.com",
+  "twitter4j repository" at "http://twitter4j.org/maven2"
 )
+
+resolvers += Opts.resolver.sonatypeReleases
 
 scalaVersion := "2.9.2"
 
 libraryDependencies ++= Seq(
-  "org.twitter4j" % "twitter4j-core" % "3.0.1"
- ,"com.twitter" % "util-eval" % "5.3.13"
+  "org.twitter4j" % "twitter4j-core" % "3.0.3"
+ ,"com.twitter" %% "util-eval" % "6.0.5"
  ,"org.specs2"  %% "specs2" % "1.12.3" % "test"
  ,"org.scalaj"  %% "scalaj-http" % "0.3.2"
 )
