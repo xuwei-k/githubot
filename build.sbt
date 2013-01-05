@@ -15,7 +15,7 @@ libraryDependencies ++= Seq(
   "org.twitter4j" % "twitter4j-core" % "3.0.3"
  ,"com.twitter" %% "util-eval" % "6.0.5"
  ,"org.specs2"  %% "specs2" % "1.12.3" % "test"
- ,"org.scalaj"  %% "scalaj-http" % "0.3.2"
+ ,"org.scalaj"  %% "scalaj-http" % "0.3.6"
 )
 
 scalacOptions += "-deprecation"
