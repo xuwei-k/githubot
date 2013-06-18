@@ -8,7 +8,7 @@ object Main{
 
   def main(args:Array[String]){
     val configFile = new File(
-      allCatch.opt(args.head).getOrElse("config")
+      allCatch.opt(args.head).getOrElse("config.scala")
     )
     val conf = Eval[Config](configFile)
     run(conf)
