@@ -8,10 +8,10 @@ resolvers ++= Seq(
 
 resolvers += Opts.resolver.sonatypeReleases
 
-scalaVersion := "2.10.2"
+scalaVersion := "2.10.3"
 
 libraryDependencies ++= Seq(
-  "org.twitter4j" % "twitter4j-core" % "3.0.3"
+  "org.twitter4j" % "twitter4j-core" % "3.0.5"
  ,"com.twitter" %% "util-eval" % "6.3.6"
  ,"org.specs2"  %% "specs2" % "1.14" % "test"
  ,"org.scalaj"  %% "scalaj-http" % "0.3.7"
