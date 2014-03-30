@@ -12,6 +12,7 @@ scalaVersion := "2.10.4"
 
 libraryDependencies ++= Seq(
   "org.twitter4j" % "twitter4j-core" % "4.0.1"
+ ,"io.argonaut" %% "argonaut" % "6.1-M2"
  ,"com.twitter" %% "util-eval" % "6.3.6"
  ,"org.specs2"  %% "specs2" % "2.3.10" % "test"
  ,"org.scalaj"  %% "scalaj-http" % "0.3.14"
