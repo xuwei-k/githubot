@@ -16,7 +16,7 @@ val twitter4jVersion = "4.0.2"
 
 libraryDependencies ++= Seq(
   "org.twitter4j" % "twitter4j-core" % twitter4jVersion
- ,"io.argonaut" %% "argonaut" % "6.1-M2"
+ ,"io.argonaut" %% "argonaut" % "6.1-M3"
  ,"com.twitter" %% "util-eval" % "6.3.6"
  ,"org.scalaj"  %% "scalaj-http" % "0.3.14"
 )
