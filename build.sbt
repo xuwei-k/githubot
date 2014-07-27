@@ -25,10 +25,13 @@ scalacOptions += "-deprecation"
 
 assemblySettings
 
-
 AssemblyKeys.jarName in AssemblyKeys.assembly := {
   val df = new java.text.SimpleDateFormat("yyyy-MM-dd-HH-mm")
   s"${name.value}-${df.format(new java.util.Date)}-twitter4j-${twitter4jVersion}.jar"
 }
+
+resourceGenerators in Compile += task(
+  Seq(baseDirectory.value / "build.sbt")
+)
 
 sourcesInBase := false
