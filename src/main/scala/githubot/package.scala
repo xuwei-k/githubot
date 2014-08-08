@@ -3,9 +3,9 @@ package object githubot{
 
   @inline def allCatchPrintStackTrace(body: => Any){
     try{
-      val r = body
+      val _ = body
     }catch{
-      case e => e.printStackTrace
+      case e: Throwable => e.printStackTrace
     }
   }
 

@@ -4,7 +4,7 @@ import scalaj.http.Http
 import scalaj.http.HttpOptions._
 
 object Mail{
-  case class Conf(to: String, password: String)
+  final case class Conf(to: String, password: String)
 
   private val defaultOptions = List(
     allowUnsafeSSL, connTimeout(30000), readTimeout(30000)

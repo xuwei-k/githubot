@@ -10,18 +10,30 @@ licenses := Seq("MIT License" -> url("http://www.opensource.org/licenses/mit-lic
 
 resolvers += Opts.resolver.sonatypeReleases
 
-scalaVersion := "2.10.4"
+scalaVersion := "2.11.2"
 
 val twitter4jVersion = "4.0.2"
 
-libraryDependencies ++= Seq(
-  "org.twitter4j" % "twitter4j-core" % twitter4jVersion
- ,"io.argonaut" %% "argonaut" % "6.1-M3"
- ,"com.twitter" %% "util-eval" % "6.3.6"
- ,"org.scalaj"  %% "scalaj-http" % "0.3.14"
+libraryDependencies ++= (
+  ("org.scala-lang" % "scala-compiler" % scalaVersion.value) ::
+  ("org.twitter4j" % "twitter4j-core" % twitter4jVersion) ::
+  ("io.argonaut" %% "argonaut" % "6.1-M4") ::
+  ("org.scalaj"  %% "scalaj-http" % "0.3.16") ::
+  Nil
 )
 
-scalacOptions += "-deprecation"
+scalacOptions ++= (
+  "-deprecation" ::
+  "-unchecked" ::
+  "-Xlint" ::
+  "-language:postfixOps" ::
+  "-language:existentials" ::
+  "-language:higherKinds" ::
+  "-language:implicitConversions" ::
+  "-Ywarn-unused" ::
+  "-Ywarn-unused-import" ::
+  Nil
+)
 
 assemblySettings
 

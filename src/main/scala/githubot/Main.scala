@@ -1,16 +1,13 @@
 package githubot
 
 import scala.util.control.Exception.allCatch
-import com.twitter.util.Eval
 import java.io.File
 
 object Main{
 
   def main(args:Array[String]){
-    val configFile = new File(
-      allCatch.opt(args.head).getOrElse("config.scala")
-    )
-    val conf = Eval[Config](configFile)
+    val configFile = allCatch.opt(args.head).getOrElse("config.scala")
+    val conf = Eval.fromFile[Config](configFile)
     run(conf)
   }
 
@@ -20,7 +17,7 @@ object Main{
     val client = TweetClient(twitter)
     def tweet(data:Seq[UserAction]){
       data.reverseIterator.filter{conf.filter}.foreach{ e =>
-        Thread.sleep(tweetInterval.inMillis)
+        Thread.sleep(tweetInterval.toMillis)
         client.tweet(e)
       }
     }
@@ -35,14 +32,14 @@ object Main{
 
     @annotation.tailrec
     def _run(){
-      Thread.sleep(interval.inMillis)
+      Thread.sleep(interval.toMillis)
       try{
         val oldIds = db.selectAll
         val newData = getUserActions.filterNot{a => oldIds.contains(a.id)}
         db.insert(newData.map{_.id}:_*)
         tweet(newData)
       }catch{
-        case e =>
+        case e: Throwable =>
           e.printStackTrace
           mail.foreach{c =>
             allCatchPrintStackTrace{
