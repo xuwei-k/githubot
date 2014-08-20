@@ -11,6 +11,11 @@ abstract class Config{
   val tweetInterval: Duration = 500 millis
   val firstTweet: Boolean = false
   val mail: Option[Mail.Conf] = None
+  val uploadImage: Option[ImageSetting]
+}
+
+abstract class ImageSetting{
+  val size: Int
 }
 
 abstract class TwitterSettings{

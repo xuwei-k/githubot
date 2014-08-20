@@ -12,10 +12,11 @@ case class UserAction(
     (url + " " + title + " " + published).take(140)
   }
 
-  def imageStream: Option[java.io.InputStream] =
-    imageUrl.flatMap{ u =>
+  def imageStream(size: Int): Option[java.io.InputStream] =
+    imageUrl.flatMap{ imgUrl =>
       try {
-        Option((new java.net.URL(u)).openConnection.getInputStream)
+        val u = new java.net.URL(imgUrl + "?s=" + size)
+        Option(u.openConnection.getInputStream)
       } catch {
         case e: Throwable =>
           println(e)

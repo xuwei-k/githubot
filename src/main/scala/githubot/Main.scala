@@ -15,10 +15,11 @@ object Main{
     import conf._
     val db = new DB[UserActionID](dbSize)
     val client = TweetClient(twitter)
+    val imageSize = uploadImage.map(_.size)
     def tweet(data: Seq[UserAction]): Unit = {
       data.reverseIterator.filter{conf.filter}.foreach{ e =>
         Thread.sleep(tweetInterval.toMillis)
-        client.tweet(e)
+        client.tweet(e, imageSize)
       }
     }
 

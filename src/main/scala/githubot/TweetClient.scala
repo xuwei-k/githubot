@@ -16,9 +16,9 @@ final case class TweetClient(conf: TwitterSettings) {
     new TwitterFactory(c.build()).getInstance()
   }
 
-  def tweet(a: UserAction): Unit = {
+  def tweet(a: UserAction, imageSize: Option[Int]): Unit = {
     allCatchPrintStackTrace{
-      a.imageStream match {
+      imageSize.flatMap(a.imageStream) match {
         case Some(stream) =>
           try{
             val status = new StatusUpdate(a.tweetString).media("image", stream)
