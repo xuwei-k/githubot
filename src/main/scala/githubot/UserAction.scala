@@ -4,12 +4,24 @@ case class UserAction(
   id: UserActionID,
   url: String,
   title: String,
-  published: String
+  published: String,
+  imageUrl: Option[String]
 ) {
 
   def tweetString: String = {
     (url + " " + title + " " + published).take(140)
   }
+
+  def imageStream: Option[java.io.InputStream] =
+    imageUrl.flatMap{ u =>
+      try {
+        Option((new java.net.URL(u)).openConnection.getInputStream)
+      } catch {
+        case e: Throwable =>
+          println(e)
+          None
+      }
+    }
 }
 
 object UserAction{
@@ -18,7 +30,8 @@ object UserAction{
       (rawData \ "id").text.trim,
       (rawData \ "link" \ "@href").text.trim,
       (rawData \ "title").text.trim,
-      (rawData \ "published").text.trim
+      (rawData \ "published").text.trim,
+      (rawData \ "thumbnail" \ "@url").text.trim.split('?').headOption.filter(_.startsWith("http"))
     )
   }
 }
