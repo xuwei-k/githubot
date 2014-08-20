@@ -3,7 +3,7 @@ package githubot
 import twitter4j._
 import twitter4j.conf._
 
-case class TweetClient(conf:TwitterSettings) {
+final case class TweetClient(conf: TwitterSettings) {
 
   val t = {
     val c = new ConfigurationBuilder
@@ -16,7 +16,7 @@ case class TweetClient(conf:TwitterSettings) {
     new TwitterFactory(c.build()).getInstance()
   }
 
-  def tweet(a:UserAction){
+  def tweet(a: UserAction): Unit = {
     allCatchPrintStackTrace{
       t.updateStatus(a.tweetString)
     }

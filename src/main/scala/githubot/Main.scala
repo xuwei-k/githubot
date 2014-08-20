@@ -5,17 +5,17 @@ import java.io.File
 
 object Main{
 
-  def main(args:Array[String]){
+  def main(args: Array[String]): Unit = {
     val configFile = allCatch.opt(args.head).getOrElse("config.scala")
     val conf = Eval.fromFile[Config](configFile)
     run(conf)
   }
 
-  def run(conf:Config){
+  def run(conf: Config): Unit = {
     import conf._
     val db = new DB[UserActionID](dbSize)
     val client = TweetClient(twitter)
-    def tweet(data:Seq[UserAction]){
+    def tweet(data: Seq[UserAction]): Unit = {
       data.reverseIterator.filter{conf.filter}.foreach{ e =>
         Thread.sleep(tweetInterval.toMillis)
         client.tweet(e)
@@ -31,7 +31,7 @@ object Main{
     }
 
     @annotation.tailrec
-    def _run(){
+    def _run(): Unit = {
       Thread.sleep(interval.toMillis)
       try{
         val oldIds = db.selectAll
