@@ -40,6 +40,7 @@ object Main{
         tweet(newData)
       }catch{
         case e: Throwable =>
+          printDateTime()
           e.printStackTrace
           mail.foreach{c =>
             allCatchPrintStackTrace{
