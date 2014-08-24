@@ -15,7 +15,7 @@ final case class UserAction(
   }
 
   def image: InputStream = {
-    val bytes = IO.html2byteArray(id, content)
+    val bytes = IO.html2byteArray(content)
     new ByteArrayInputStream(bytes)
   }
 }

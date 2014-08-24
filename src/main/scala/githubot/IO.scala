@@ -34,7 +34,7 @@ object IO {
     out.toByteArray
   }
 
-  def html2byteArray(id: String, html: String): Array[Byte] = {
+  def html2byteArray(html: String): Array[Byte] = {
     val generator = new gui.ava.html.image.generator.HtmlImageGenerator
     generator.loadHtml(html)
     withTempFile{ file =>
