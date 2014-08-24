@@ -18,7 +18,14 @@ final case class TweetClient(conf: TwitterSettings) {
 
   def tweet(a: UserAction): Unit = {
     allCatchPrintStackTrace{
-      t.updateStatus(a.tweetString)
+      try{
+        val status = new StatusUpdate(a.tweetString).media("img", a.image)
+        t.updateStatus(status)
+      }catch{
+        case e: Throwable =>
+          println(e)
+          t.updateStatus(a.tweetString)
+      }
     }
   }
 
