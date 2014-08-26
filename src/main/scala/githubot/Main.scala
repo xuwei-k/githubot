@@ -3,53 +3,53 @@ package githubot
 import scala.util.control.Exception.allCatch
 import java.io.File
 
+
 object Main{
 
   def main(args: Array[String]): Unit = {
     val configFile = allCatch.opt(args.head).getOrElse("config.scala")
-    val conf = Eval.fromFile[Config](configFile)
-    run(conf)
+    run(new File(configFile))
   }
 
-  def run(conf: Config): Unit = {
-    import conf._
-    val db = new DB[UserActionID](dbSize)
-    val client = TweetClient(twitter)
-    def tweet(data: Seq[UserAction]): Unit = {
-      data.reverseIterator.filter{conf.filter}.foreach{ e =>
-        Thread.sleep(tweetInterval.toMillis)
-        client.tweet(e)
-      }
-    }
+  def getUserActions(rss: URL): List[UserAction] =
+    (scala.xml.XML.load(rss) \ "entry").map{ UserAction.apply }.toList
 
-    def getUserActions = (xml.XML.load(rss) \ "entry").map{ UserAction.apply }
-
-    val firstData = getUserActions
-    db.insert(firstData.map{_.id}:_*)
+  def run(configFile: File): Unit = {
+    val env = Env.fromConfigFile(configFile)
+    import env._, env.config._
+    val firstData = getUserActions(rss)
+    db.insert(firstData.map{_.id})
     if(firstTweet){
-      tweet(firstData)
+      tweet(env, firstData)
     }
+    loop(env)
+  }
 
-    @annotation.tailrec
-    def _run(): Unit = {
+  def tweet(env: Env, data: Seq[UserAction]): Unit = {
+    data.reverseIterator.filter{env.config.filter}.foreach{ e =>
+      Thread.sleep(env.config.tweetInterval.toMillis)
+      env.client.tweet(e)
+    }
+  }
+
+  @annotation.tailrec
+  def loop(env: Env): Unit = {
+    import env._, config._
+    try {
       Thread.sleep(interval.toMillis)
-      try{
-        val oldIds = db.selectAll
-        val newData = getUserActions.filterNot{a => oldIds.contains(a.id)}
-        db.insert(newData.map{_.id}:_*)
-        tweet(newData)
-      }catch{
-        case e: Throwable =>
-          e.printStackTrace
-          mail.foreach{c =>
-            allCatchPrintStackTrace{
-              println(Mail(e.getMessage,e.getStackTrace.mkString("\n"),c))
-            }
+      val oldIds = db.selectAll
+      val newData = getUserActions(rss).filterNot{a => oldIds.contains(a.id)}
+      env.db.insert(newData.map{ _.id })
+      tweet(env, newData)
+    }catch{
+      case e: Throwable =>
+        e.printStackTrace()
+        mail.foreach{ c =>
+          allCatchPrintStackTrace{
+            println(Mail(e.getMessage, e.getStackTrace.mkString("\n"), c))
           }
-      }
-      _run()
+        }
     }
-
-    _run()
+    loop(env.reload)
   }
 }
