@@ -1,5 +1,6 @@
 package githubot
 
+import java.io.InputStream
 import twitter4j._
 import twitter4j.conf._
 
@@ -16,11 +17,16 @@ final case class TweetClient(conf: TwitterSettings) {
     new TwitterFactory(c.build()).getInstance()
   }
 
-  def tweet(a: UserAction): Unit = {
+  def tweet(a: UserAction, image: Option[InputStream]): Unit = {
     allCatchPrintStackTrace{
       try{
-        val status = new StatusUpdate(a.tweetString).media("img", a.image)
-        t.updateStatus(status)
+        image match {
+          case Some(stream) =>
+            val status = new StatusUpdate(a.tweetString).media("img", stream)
+            t.updateStatus(status)
+          case None =>
+            t.updateStatus(a.tweetString)
+        }
       }catch{
         case e: Throwable =>
           println(e)

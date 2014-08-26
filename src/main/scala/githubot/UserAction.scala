@@ -14,13 +14,14 @@ final case class UserAction(
     (url + " " + title + " " + published).take(140)
   }
 
-  def image: InputStream = {
-    val bytes = IO.html2byteArray(content)
-    new ByteArrayInputStream(bytes)
-  }
 }
 
 object UserAction{
+
+  def getImageStream(action: UserAction): InputStream = {
+    val bytes = IO.html2byteArray(action.content)
+    new ByteArrayInputStream(bytes)
+  }
 
   def apply(rawData: xml.Node): UserAction = {
     UserAction(

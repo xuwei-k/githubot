@@ -28,7 +28,11 @@ object Main{
   def tweet(env: Env, data: Seq[UserAction]): Unit = {
     data.reverseIterator.filter{env.config.filter}.foreach{ e =>
       Thread.sleep(env.config.tweetInterval.toMillis)
-      env.client.tweet(e)
+      val imageOpt = {
+        if(env.config.addImage(e)) Some(UserAction.getImageStream(e))
+        else None
+      }
+      env.client.tweet(e, imageOpt)
     }
   }
 
