@@ -14,6 +14,8 @@ final case class Env(
     val confString = scala.io.Source.fromFile(confFile).mkString
     if(previousConfig != confString){
       val newConfig = Eval[Config](confString)
+      println("reload config file")
+      println(confString)
       this.copy(config = newConfig, previousConfig = confString, client = TweetClient(newConfig.twitter))
     }else{
       this

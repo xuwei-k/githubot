@@ -18,6 +18,8 @@ object Main{
     val env = Env.fromConfigFile(configFile)
     import env._, env.config._
     val firstData = getUserActions(rss)
+    println("first data")
+    println(firstData)
     db.insert(firstData.map{_.id})
     if(firstTweet){
       tweet(env, firstData)
