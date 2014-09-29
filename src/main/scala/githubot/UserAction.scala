@@ -18,8 +18,8 @@ final case class UserAction(
 
 object UserAction{
 
-  def getImageStream(action: UserAction): InputStream = {
-    val bytes = IO.html2byteArray(action.content)
+  def getImageStream(tweetHtml: String): InputStream = {
+    val bytes = IO.html2byteArray(tweetHtml)
     new ByteArrayInputStream(bytes)
   }
 

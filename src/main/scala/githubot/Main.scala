@@ -31,7 +31,7 @@ object Main{
     data.reverseIterator.filter{env.config.filter}.foreach{ e =>
       Thread.sleep(env.config.tweetInterval.toMillis)
       val imageOpt = {
-        if(env.config.addImage(e)) Some(UserAction.getImageStream(e))
+        if(env.config.addImage(e)) Some(UserAction.getImageStream(env.config.action2html(e)))
         else None
       }
       env.client.tweet(e, imageOpt)

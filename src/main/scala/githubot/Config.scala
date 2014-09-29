@@ -3,6 +3,7 @@ package githubot
 import scala.concurrent.duration._
 
 abstract class Config{
+  def action2html(action: UserAction): String
   val twitter: TwitterSettings
   val rss: URL
   val interval: Duration
