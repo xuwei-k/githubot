@@ -14,34 +14,73 @@ new Config{
     val accessTokenSecret = ""
   }
 
+  private[this] val shouldNotAddImageWords = Set(
+    "starred", "forked", "created branch", "created repository", "deleted branch", "created tag"
+  ).map(" " + _ + " ")
+
+  override val addImage = { (action: UserAction) =>
+    ! shouldNotAddImageWords.exists(word => action.title.contains(word))
+  }
+
+  private def removeHtmlTags(string: String): Option[String] =
+    try {
+      Option(scala.xml.XML.loadString(string).text)
+    } catch {
+      case _: Exception =>
+        None
+    }
+
+  private def splitLine(str: String): String = {
+    val words = str.trim.split(' ').iterator
+    var lines: List[String] = Nil
+    var current = new StringBuilder(" ")
+    while (words.hasNext) {
+      if (current.size > 30) {
+        lines ::= current.result()
+        current = new StringBuilder(words.next() + " ")
+      } else {
+        current.append(words.next())
+        current.append(" ")
+      }
+    }
+    lines ::= current.result()
+    lines.reverseIterator.mkString("<br />")
+  }
+
+  private[this] final val titleClassDiv = """<div class="title">"""
+  private[this] final val timeClassDiv = """<div class="time">"""
+
   def action2html(action: UserAction): String = {
     val getLine = action.content.lines.toArray.lift
-    action.content.lines.zipWithIndex.map{
+
+    def isIgnoreDivElem(line: String, index: Int, div: String) = {
+      (line == div) ||
+      (getLine(index - 1).exists(_ == div)) ||
+      (getLine(index - 2).exists(_ == div))
+    }
+
+    action.content.lines.zipWithIndex.filterNot{
+      case (line, index) =>
+        isIgnoreDivElem(line, index, titleClassDiv) || isIgnoreDivElem(line, index, timeClassDiv)
+    }.map{
       case (line, index)
-        if line.size > 50 &&
-           getLine(index - 1).exists(_.contains("<blockquote>")) &&
-           getLine(index + 1).exists(_.contains("</blockquote>")) &&
-           (false == line.contains("<a href=")) &&
-           (false == line.contains("<img "))
+        if line.trim.size > 50 &&
+           (getLine(index - 1).exists(_.contains("<blockquote>")) || getLine(index + 1).exists(_.contains("</blockquote>")))
          =>
 
-        val words = line.split(' ').iterator
-        var lines: List[String] = Nil
-        var current = new StringBuilder(" ")
-        while (words.hasNext) {
-          if (current.size > 40) {
-            lines ::= current.result()
-            current = new StringBuilder(words.next() + " ")
-          } else {
-            current.append(words.next())
-            current.append(" ")
-          }
+        removeHtmlTags(line) match {
+          case Some(str) =>
+            splitLine(str)
+          case None =>
+            if(line.contains("<a href=") || line.contains("<img ")){
+              line
+            } else {
+              splitLine(line)
+            }
         }
-        lines ::= current.result()
-        lines.reverseIterator.mkString("<br />")
       case (line, _) =>
         line
-    }.mkString("\n")
+    }.map(_.replace("<p>", """<p style="text-align: center;">""")).mkString("\n")
   }
 
 }
