@@ -31,7 +31,10 @@ new Config{
     }
 
   private def splitLine(str: String): String = {
-    val words = str.trim.split(' ').iterator
+    val delimiters = List(' ', '。', '、', '　', ' ')
+    val words: Iterator[String] = delimiters.foldLeft(Array(str.trim)){ 
+      (strings, c) => strings.flatMap(_.split(c))
+    }.iterator
     var lines: List[String] = Nil
     var current = new StringBuilder(" ")
     while (words.hasNext) {
