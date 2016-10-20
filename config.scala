@@ -4,9 +4,12 @@ import scala.concurrent.duration._
 
 new Config{
   val rss = new URL("")
-  val interval = 5.minute
-  val filter: UserAction => Boolean = Function.const(true)
-
+  override val firstTweet = false
+  val interval = 3.minute
+  override val filter = { (u: UserAction) =>
+    val s = u.tweetString
+    List("codecov-io", "googlebot", "asfgit", "grpc-jenkins", "netkins", "buildhive", "scala-jenkins", "akka-ci", "asfbot", "ConfluentJenkins").forall(disable => ! s.contains(disable))
+  }
   val twitter = new TwitterSettings{
     val consumerKey       = ""
     val consumerSecret    = ""
@@ -38,7 +41,7 @@ new Config{
     var lines: List[String] = Nil
     var current = new StringBuilder(" ")
     while (words.hasNext) {
-      if (current.size > 30) {
+      if (current.size > 80) {
         lines ::= current.result()
         current = new StringBuilder(words.next() + " ")
       } else {
@@ -67,7 +70,7 @@ new Config{
         isIgnoreDivElem(line, index, titleClassDiv) || isIgnoreDivElem(line, index, timeClassDiv)
     }.map{
       case (line, index)
-        if line.trim.size > 50 &&
+        if line.trim.size > 80 &&
            (getLine(index - 1).exists(_.contains("<blockquote>")) || getLine(index + 1).exists(_.contains("</blockquote>")))
          =>
 
@@ -87,4 +90,3 @@ new Config{
   }
 
 }
-
