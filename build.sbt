@@ -23,6 +23,12 @@ libraryDependencies ++= (
   Nil
 )
 
+val unusedWarnings = (
+  "-Ywarn-unused" ::
+  "-Ywarn-unused-import" ::
+  Nil
+)
+
 scalacOptions ++= (
   "-deprecation" ::
   "-unchecked" ::
@@ -31,9 +37,11 @@ scalacOptions ++= (
   "-language:existentials" ::
   "-language:higherKinds" ::
   "-language:implicitConversions" ::
-  "-Ywarn-unused" ::
-  "-Ywarn-unused-import" ::
   Nil
+) ::: unusedWarnings
+
+Seq(Compile, Test).flatMap(c =>
+  scalacOptions in (c, console) --= unusedWarnings
 )
 
 assemblyJarName in assembly := {
