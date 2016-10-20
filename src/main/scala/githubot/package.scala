@@ -5,7 +5,7 @@ package object githubot{
     try{
       val _ = body
     }catch{
-      case e: Throwable => e.printStackTrace
+      case e: Throwable => e.printStackTrace()
     }
   }
 
