@@ -7,7 +7,7 @@ package object githubot{
     }catch{
       case e: Throwable =>
         printDateTime()
-        e.printStackTrace
+        e.printStackTrace()
     }
   }
 

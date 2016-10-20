@@ -21,9 +21,9 @@ object Main{
       }
     }
 
-    def getUserActions = (xml.XML.load(rss) \ "entry").map{ UserAction.apply }
+    def getUserActions() = (xml.XML.load(rss) \ "entry").map{ UserAction.apply }
 
-    val firstData = getUserActions
+    val firstData = getUserActions()
     db.insert(firstData.map{_.id}:_*)
     if(firstTweet){
       tweet(firstData)
@@ -34,13 +34,13 @@ object Main{
       Thread.sleep(interval.toMillis)
       try{
         val oldIds = db.selectAll
-        val newData = getUserActions.filterNot{a => oldIds.contains(a.id)}
+        val newData = getUserActions().filterNot{a => oldIds.contains(a.id)}
         db.insert(newData.map{_.id}:_*)
         tweet(newData)
       }catch{
         case e: Throwable =>
           printDateTime()
-          e.printStackTrace
+          e.printStackTrace()
           mail.foreach{c =>
             allCatchPrintStackTrace{
               println(Mail(e.getMessage,e.getStackTrace.mkString("\n"),c))
