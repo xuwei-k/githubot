@@ -10,16 +10,16 @@ licenses := Seq("MIT License" -> url("http://www.opensource.org/licenses/mit-lic
 
 resolvers += Opts.resolver.sonatypeReleases
 
-scalaVersion := "2.11.6"
+scalaVersion := "2.11.8"
 
-val twitter4jVersion = "4.0.3"
+val twitter4jVersion = "4.0.5"
 
 libraryDependencies ++= (
   ("org.scala-lang" % "scala-compiler" % scalaVersion.value) ::
   ("com.github.xuwei-k" % "html2image" % "0.1.0") ::
   ("org.twitter4j" % "twitter4j-core" % twitter4jVersion) ::
-  ("io.argonaut" %% "argonaut" % "6.1-M4") ::
-  ("org.scalaj"  %% "scalaj-http" % "0.3.16") ::
+  ("io.argonaut" %% "argonaut" % "6.1a") ::
+  ("org.scalaj"  %% "scalaj-http" % "2.3.0") ::
   Nil
 )
 
@@ -36,9 +36,7 @@ scalacOptions ++= (
   Nil
 )
 
-assemblySettings
-
-AssemblyKeys.jarName in AssemblyKeys.assembly := {
+assemblyJarName in assembly := {
   val df = new java.text.SimpleDateFormat("yyyy-MM-dd-HH-mm")
   s"${name.value}-${df.format(new java.util.Date)}-twitter4j-${twitter4jVersion}.jar"
 }
