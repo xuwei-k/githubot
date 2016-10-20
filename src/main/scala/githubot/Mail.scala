@@ -21,7 +21,7 @@ object Mail{
       "password" -> Json.jString(conf.password),
       "attachments" -> Json.obj()
     ).toString
-    Http.postData(gaemailUrl, jsonString).options(defaultOptions).asString
+    Http(gaemailUrl).postData(jsonString).options(defaultOptions).asString.body
   }
 
 }

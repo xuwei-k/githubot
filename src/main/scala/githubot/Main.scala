@@ -1,7 +1,6 @@
 package githubot
 
 import scala.util.control.Exception.allCatch
-import java.io.File
 
 object Main{
 
