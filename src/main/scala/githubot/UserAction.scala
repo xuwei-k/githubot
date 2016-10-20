@@ -11,7 +11,12 @@ final case class UserAction(
 ) {
 
   def tweetString: String = {
-    (url + " " + title + " " + published).take(140)
+    val u = if(url == "https://github.com/" || title.contains(" deleted branch ")) {
+      ""
+    } else {
+      url + " "
+    }
+    (u + title + " " + published).take(140)
   }
 
 }
