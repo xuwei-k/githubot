@@ -18,7 +18,7 @@ new Config{
   }
 
   private[this] val shouldNotAddImageWords = Set(
-    "starred", "forked", "created branch", "created repository", "deleted branch", "created tag"
+    "starred", "forked", "created branch", "created repository", "deleted branch", "created tag", "deleted tag"
   ).map(" " + _ + " ")
 
   override val addImage = { (action: UserAction) =>
