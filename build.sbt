@@ -18,7 +18,7 @@ libraryDependencies ++= (
   ("org.scala-lang" % "scala-compiler" % scalaVersion.value) ::
   ("com.github.xuwei-k" % "html2image" % "0.1.0") ::
   ("org.twitter4j" % "twitter4j-core" % twitter4jVersion) ::
-  ("io.argonaut" %% "argonaut" % "6.2-RC1") ::
+  ("io.argonaut" %% "argonaut" % "6.2-RC2") ::
   ("org.scalaj"  %% "scalaj-http" % "2.3.0") ::
   Nil
 )
