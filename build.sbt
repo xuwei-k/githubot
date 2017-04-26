@@ -12,7 +12,7 @@ resolvers += Opts.resolver.sonatypeReleases
 
 scalaVersion := "2.12.2"
 
-val twitter4jVersion = "4.0.5"
+val twitter4jVersion = "4.0.6"
 
 libraryDependencies ++= (
   ("org.scala-lang" % "scala-compiler" % scalaVersion.value) ::
