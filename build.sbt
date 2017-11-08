@@ -16,33 +16,31 @@ val twitter4jVersion = "4.0.6"
 
 libraryDependencies ++= (
   ("org.scala-lang" % "scala-compiler" % scalaVersion.value) ::
-  ("com.github.xuwei-k" % "html2image" % "0.1.0") ::
-  ("org.twitter4j" % "twitter4j-core" % twitter4jVersion) ::
-  ("io.argonaut" %% "argonaut" % "6.2") ::
-  ("org.scalaj"  %% "scalaj-http" % "2.3.0") ::
-  Nil
+    ("com.github.xuwei-k" % "html2image" % "0.1.0") ::
+    ("org.twitter4j" % "twitter4j-core" % twitter4jVersion) ::
+    ("io.argonaut" %% "argonaut" % "6.2") ::
+    ("org.scalaj" %% "scalaj-http" % "2.3.0") ::
+    Nil
 )
 
 val unusedWarnings = (
   "-Ywarn-unused" ::
-  "-Ywarn-unused-import" ::
-  Nil
+    "-Ywarn-unused-import" ::
+    Nil
 )
 
 scalacOptions ++= (
   "-deprecation" ::
-  "-unchecked" ::
-  "-Xlint" ::
-  "-language:postfixOps" ::
-  "-language:existentials" ::
-  "-language:higherKinds" ::
-  "-language:implicitConversions" ::
-  Nil
+    "-unchecked" ::
+    "-Xlint" ::
+    "-language:postfixOps" ::
+    "-language:existentials" ::
+    "-language:higherKinds" ::
+    "-language:implicitConversions" ::
+    Nil
 ) ::: unusedWarnings
 
-Seq(Compile, Test).flatMap(c =>
-  scalacOptions in (c, console) --= unusedWarnings
-)
+Seq(Compile, Test).flatMap(c => scalacOptions in (c, console) --= unusedWarnings)
 
 assemblyJarName in assembly := {
   val df = new java.text.SimpleDateFormat("yyyy-MM-dd-HH-mm")

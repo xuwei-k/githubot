@@ -1,10 +1,9 @@
+package object githubot {
 
-package object githubot{
-
-  @inline def allCatchPrintStackTrace(body: => Any){
-    try{
+  @inline def allCatchPrintStackTrace(body: => Any) {
+    try {
       val _ = body
-    }catch{
+    } catch {
       case e: Throwable => e.printStackTrace()
     }
   }

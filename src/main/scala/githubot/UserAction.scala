@@ -1,6 +1,7 @@
 package githubot
 
-import java.io.{ByteArrayInputStream, InputStream}
+import java.io.ByteArrayInputStream
+import java.io.InputStream
 
 final case class UserAction(
   id: UserActionID,
@@ -11,7 +12,7 @@ final case class UserAction(
 ) {
 
   def tweetString: String = {
-    val u = if(url == "https://github.com/" || title.contains(" deleted branch ")) {
+    val u = if (url == "https://github.com/" || title.contains(" deleted branch ")) {
       ""
     } else {
       url + " "
@@ -21,7 +22,7 @@ final case class UserAction(
 
 }
 
-object UserAction{
+object UserAction {
 
   def getImageStream(tweetHtml: String): InputStream = {
     val bytes = IO.html2byteArray(tweetHtml)

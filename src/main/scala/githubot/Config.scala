@@ -2,7 +2,7 @@ package githubot
 
 import scala.concurrent.duration._
 
-abstract class Config{
+abstract class Config {
   def action2html(action: UserAction): String
   val twitter: TwitterSettings
   val rss: URL
@@ -16,10 +16,9 @@ abstract class Config{
   val charCount: Int = 140
 }
 
-abstract class TwitterSettings{
+abstract class TwitterSettings {
   val consumerKey: String
   val consumerSecret: String
   val accessToken: String
   val accessTokenSecret: String
 }
-

@@ -8,23 +8,24 @@ final case class Env(
   client: TweetClient,
   private val previousConfig: String,
   private val confFile: File
-){
+) {
 
-  def reload: Env = try{
-    val confString = scala.io.Source.fromFile(confFile).mkString
-    if(previousConfig != confString){
-      val newConfig = Eval[Config](confString)
-      println("reload config file")
-      println(confString)
-      this.copy(config = newConfig, previousConfig = confString, client = TweetClient(newConfig.twitter))
-    }else{
-      this
+  def reload: Env =
+    try {
+      val confString = scala.io.Source.fromFile(confFile).mkString
+      if (previousConfig != confString) {
+        val newConfig = Eval[Config](confString)
+        println("reload config file")
+        println(confString)
+        this.copy(config = newConfig, previousConfig = confString, client = TweetClient(newConfig.twitter))
+      } else {
+        this
+      }
+    } catch {
+      case e: Throwable =>
+        e.printStackTrace()
+        this
     }
-  }catch{
-    case e: Throwable =>
-      e.printStackTrace()
-      this
-  }
 }
 
 object Env {

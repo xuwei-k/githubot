@@ -8,7 +8,7 @@ final case class TweetClient(conf: TwitterSettings) {
 
   val t = {
     val c = new ConfigurationBuilder
-      c.setDebugEnabled(true)
+    c.setDebugEnabled(true)
       .setOAuthConsumerKey(conf.consumerKey)
       .setOAuthConsumerSecret(conf.consumerSecret)
       .setOAuthAccessToken(conf.accessToken)
@@ -18,8 +18,8 @@ final case class TweetClient(conf: TwitterSettings) {
   }
 
   def tweet(a: UserAction, image: Option[InputStream], charCount: Int): Unit = {
-    allCatchPrintStackTrace{
-      try{
+    allCatchPrintStackTrace {
+      try {
         val tweet = a.tweetString.take(charCount)
         image match {
           case Some(stream) =>
@@ -28,7 +28,7 @@ final case class TweetClient(conf: TwitterSettings) {
           case None =>
             t.updateStatus(tweet)
         }
-      }catch{
+      } catch {
         case e: Throwable =>
           println(e)
           t.updateStatus(a.tweetString.take(140))
@@ -37,5 +37,3 @@ final case class TweetClient(conf: TwitterSettings) {
   }
 
 }
-
-

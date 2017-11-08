@@ -8,8 +8,7 @@ object IO {
   def withTempFile[T](action: File => T): T = {
     val prefix, postfix = Random.alphanumeric.take(5).mkString
     val file = File.createTempFile(prefix, postfix)
-    try { action(file) }
-    finally { file.delete() }
+    try { action(file) } finally { file.delete() }
   }
 
   def transfer(in: InputStream, out: OutputStream): Unit = {
@@ -37,7 +36,7 @@ object IO {
   def html2byteArray(html: String): Array[Byte] = {
     val generator = new gui.ava.html.image.generator.HtmlImageGenerator
     generator.loadHtml(html)
-    withTempFile{ file =>
+    withTempFile { file =>
       generator.saveAsImage(file)
       file2byteArray(file)
     }
