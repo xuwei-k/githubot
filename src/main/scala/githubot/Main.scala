@@ -22,19 +22,19 @@ object Main{
     println(firstData)
     db.insert(firstData.map{_.id})
     if(firstTweet){
-      tweet(env, firstData)
+      tweet(env, firstData, charCount)
     }
     loop(env)
   }
 
-  def tweet(env: Env, data: Seq[UserAction]): Unit = {
+  def tweet(env: Env, data: Seq[UserAction], charCount: Int): Unit = {
     data.reverseIterator.filter{env.config.filter}.foreach{ e =>
       Thread.sleep(env.config.tweetInterval.toMillis)
       val imageOpt = {
         if(env.config.addImage(e)) Some(UserAction.getImageStream(env.config.action2html(e)))
         else None
       }
-      env.client.tweet(e, imageOpt)
+      env.client.tweet(e, imageOpt, charCount)
     }
   }
 
@@ -46,7 +46,7 @@ object Main{
       val oldIds = db.selectAll
       val newData = getUserActions(rss).filterNot{a => oldIds.contains(a.id)}
       env.db.insert(newData.map{ _.id })
-      tweet(env, newData)
+      tweet(env, newData, charCount)
     }catch{
       case e: Throwable =>
         e.printStackTrace()

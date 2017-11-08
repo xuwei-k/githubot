@@ -16,7 +16,7 @@ final case class UserAction(
     } else {
       url + " "
     }
-    (u + title + " " + published).take(140)
+    (u + title + " " + published)
   }
 
 }

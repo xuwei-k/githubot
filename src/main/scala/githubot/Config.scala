@@ -13,6 +13,7 @@ abstract class Config{
   val firstTweet: Boolean = false
   val mail: Option[Mail.Conf] = None
   val addImage: UserAction => Boolean
+  val charCount: Int = 140
 }
 
 abstract class TwitterSettings{

@@ -17,20 +17,21 @@ final case class TweetClient(conf: TwitterSettings) {
     new TwitterFactory(c.build()).getInstance()
   }
 
-  def tweet(a: UserAction, image: Option[InputStream]): Unit = {
+  def tweet(a: UserAction, image: Option[InputStream], charCount: Int): Unit = {
     allCatchPrintStackTrace{
       try{
+        val tweet = a.tweetString.take(charCount)
         image match {
           case Some(stream) =>
-            val status = new StatusUpdate(a.tweetString).media("img", stream)
+            val status = new StatusUpdate(tweet).media("img", stream)
             t.updateStatus(status)
           case None =>
-            t.updateStatus(a.tweetString)
+            t.updateStatus(tweet)
         }
       }catch{
         case e: Throwable =>
           println(e)
-          t.updateStatus(a.tweetString)
+          t.updateStatus(a.tweetString.take(140))
       }
     }
   }
