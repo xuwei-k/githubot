@@ -2,6 +2,8 @@ package githubot
 
 import java.io.ByteArrayInputStream
 import java.io.InputStream
+import org.apache.commons.text.StringEscapeUtils
+import scala.annotation.tailrec
 
 final case class UserAction(
   id: UserActionID,
@@ -17,12 +19,37 @@ final case class UserAction(
     } else {
       url + " "
     }
-    (u + title + " " + published)
+    u + title + " " + published + "\n" + formattedContent
   }
 
+  private[this] def formattedContent: String = {
+    @tailrec
+    def loop(str: String): String = {
+      val replaced = UserAction.trimMap.foldLeft(str) {
+        case (s, (oldStr, newStr)) =>
+          s.replaceAll(oldStr, newStr)
+      }
+      if (replaced != str) {
+        loop(replaced)
+      } else {
+        replaced
+      }
+    }
+    val gitHash = (('0' to '9') ++ ('a' to 'f')).toSet
+    val result = loop(StringEscapeUtils.unescapeXml(content).replaceAll("\\<[^>]*>", ""))
+    result.lines.filterNot { s =>
+      title.contains(s) || s.contains(title) || s.forall(gitHash)
+    }.mkString("\n")
+  }
 }
 
 object UserAction {
+  private val trimMap: Map[String, String] = Map(
+    ("\n\n", "\n"),
+    ("  ", " "),
+    (" \n", "\n"),
+    ("\n ", "\n")
+  )
 
   def getImageStream(tweetHtml: String): InputStream = {
     val bytes = IO.html2byteArray(tweetHtml)
