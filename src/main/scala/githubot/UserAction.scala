@@ -19,7 +19,7 @@ final case class UserAction(
     } else {
       url + " "
     }
-    u + title + " " + published + "\n" + formattedContent
+    u + title + "\n\n" + formattedContent
   }
 
   private[this] def formattedContent: String = {
@@ -45,7 +45,7 @@ final case class UserAction(
 
 object UserAction {
   private val trimMap: Map[String, String] = Map(
-    ("\n\n", "\n"),
+    ("\n\n\n", "\n\n"),
     ("  ", " "),
     (" \n", "\n"),
     ("\n ", "\n")
