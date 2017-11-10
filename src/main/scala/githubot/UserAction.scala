@@ -37,8 +37,16 @@ final case class UserAction(
     }
     val gitHash = (('0' to '9') ++ ('a' to 'f')).toSet
     val result = loop(StringEscapeUtils.unescapeXml(content).replaceAll("\\<[^>]*>", ""))
-    result.lines.filterNot { s =>
+    val lines = result.lines.filterNot { s =>
       title.contains(s) || s.contains(title) || s.forall(gitHash)
+    }.toList
+
+    {
+      if (lines.nonEmpty) {
+        lines.init
+      } else {
+        lines
+      }
     }.mkString("\n")
   }
 }
