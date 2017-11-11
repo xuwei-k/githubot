@@ -21,9 +21,7 @@ object Main {
     println("first data")
     println(firstData)
     db.insert(firstData.map { _.id })
-    if (firstTweet) {
-      tweet(env, firstData, charCount)
-    }
+    tweet(env, firstData.take(firstTweetCount), charCount)
     loop(env)
   }
 

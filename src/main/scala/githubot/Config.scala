@@ -10,7 +10,7 @@ abstract class Config {
   val dbSize: Int = 100
   val filter: UserAction => Boolean
   val tweetInterval: Duration = 500.millis
-  val firstTweet: Boolean = false
+  val firstTweetCount: Int = 1
   val mail: Option[Mail.Conf] = None
   val addImage: UserAction => Boolean
   val charCount: Int = 140
