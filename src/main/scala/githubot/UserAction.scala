@@ -36,7 +36,7 @@ final case class UserAction(
       }
     }
     val gitHash = (('0' to '9') ++ ('a' to 'f')).toSet
-    val result = loop(StringEscapeUtils.unescapeXml(content).replaceAll("\\<[^>]*>", ""))
+    val result = loop(UserAction.escape(StringEscapeUtils.unescapeXml(content).replaceAll("\\<[^>]*>", "")))
     val lines = result.lines.filterNot { s =>
       title.contains(s) || s.contains(title) || s.forall(gitHash)
     }.toList
@@ -52,6 +52,13 @@ final case class UserAction(
 }
 
 object UserAction {
+  private[this] val escapeMap = Map(
+    "@" -> "🍥",
+  )
+
+  def escape(str: String): String =
+    escapeMap.foldLeft(str) { case (s, (k, v)) => s.replace(k, v) }
+
   private val trimMap: Map[String, String] = Map(
     ("\n\n\n", "\n\n"),
     ("  ", " "),
