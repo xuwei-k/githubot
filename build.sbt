@@ -10,16 +10,16 @@ licenses := Seq("MIT License" -> url("http://www.opensource.org/licenses/mit-lic
 
 resolvers += Opts.resolver.sonatypeReleases
 
-scalaVersion := "2.12.2"
+scalaVersion := "2.12.4"
 
 val twitter4jVersion = "4.0.6"
 
 libraryDependencies ++= (
   ("org.scala-lang" % "scala-compiler" % scalaVersion.value) ::
-    ("org.apache.commons" % "commons-text" % "1.1") ::
+    ("org.apache.commons" % "commons-text" % "1.2") ::
     ("com.github.xuwei-k" % "html2image" % "0.1.0") ::
     ("org.twitter4j" % "twitter4j-core" % twitter4jVersion) ::
-    ("io.argonaut" %% "argonaut" % "6.2") ::
+    ("io.argonaut" %% "argonaut" % "6.2.1") ::
     ("org.scalaj" %% "scalaj-http" % "2.3.0") ::
     Nil
 )
