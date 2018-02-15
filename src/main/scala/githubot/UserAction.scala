@@ -54,6 +54,9 @@ final case class UserAction(
 object UserAction {
   private[this] val escapeMap = Map(
     "@" -> "🍥",
+    "\\.md" -> "_md",
+    "\\.java" -> "_java",
+    "of github.com:" -> "of github_com:"
   )
 
   def escape(str: String): String =
