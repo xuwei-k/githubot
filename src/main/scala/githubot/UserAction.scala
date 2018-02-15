@@ -19,7 +19,7 @@ final case class UserAction(
     } else {
       url + " "
     }
-    u + title + "\n\n" + formattedContent
+    UserAction.resizeTweetString(u + title + "\n\n" + formattedContent)
   }
 
   private[this] def formattedContent: String = {
@@ -82,5 +82,41 @@ object UserAction {
       (rawData \ "published").text.trim,
       (rawData \ "content").text.trim
     )
+  }
+
+  def isASCII(c: Char): Boolean = {
+    (0x0 <= c) && (c <= 0x7f)
+  }
+
+  def resizeTweetString(tweet: String): String = {
+    if (tweet.length <= 140) {
+      tweet
+    } else {
+      val original = tweet.toCharArray
+      val buf = new java.lang.StringBuilder()
+      @annotation.tailrec
+      def loop(i: Int, size: Int): Unit = {
+        original.lift.apply(i) match {
+          case Some(char) =>
+            val nextSize = size + {
+              if (isASCII(original(i))) {
+                1
+              } else {
+                2
+              }
+            }
+            if (nextSize > 280) {
+              ()
+            } else {
+              buf.append(char)
+              loop(i + 1, nextSize)
+            }
+          case None =>
+            ()
+        }
+      }
+      loop(0, 0)
+      buf.toString
+    }
   }
 }

@@ -21,18 +21,18 @@ object Main {
     println("first data")
     println(firstData)
     db.insert(firstData.map { _.id })
-    tweet(env, firstData.take(firstTweetCount), charCount)
+    tweet(env, firstData.take(firstTweetCount))
     loop(env)
   }
 
-  def tweet(env: Env, data: Seq[UserAction], charCount: Int): Unit = {
+  def tweet(env: Env, data: Seq[UserAction]): Unit = {
     data.reverseIterator.filter { env.config.filter }.foreach { e =>
       Thread.sleep(env.config.tweetInterval.toMillis)
       val imageOpt = {
         if (env.config.addImage(e)) Some(UserAction.getImageStream(env.config.action2html(e)))
         else None
       }
-      env.client.tweet(e, imageOpt, charCount)
+      env.client.tweet(e, imageOpt)
     }
   }
 
@@ -47,7 +47,7 @@ object Main {
         oldIds.contains(a.id)
       }
       env.db.insert(newData.map { _.id })
-      tweet(env, newData, charCount)
+      tweet(env, newData)
     } catch {
       case e: Throwable =>
         e.printStackTrace()
