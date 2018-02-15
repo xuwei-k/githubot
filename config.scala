@@ -4,7 +4,6 @@ import scala.concurrent.duration._
 
 new Config{
   val rss = new URL("")
-  override val firstTweet = false
   val interval = 3.minute
   override val filter = { (u: UserAction) =>
     val s = u.tweetString
