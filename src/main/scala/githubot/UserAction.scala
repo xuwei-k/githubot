@@ -60,7 +60,7 @@ object UserAction {
   )
 
   def escape(str: String): String =
-    escapeMap.foldLeft(str) { case (s, (k, v)) => s.replace(k, v) }
+    escapeMap.foldLeft(str) { case (s, (k, v)) => s.replaceAll(k, v) }
 
   private val trimMap: Map[String, String] = Map(
     ("\n\n\n", "\n\n"),

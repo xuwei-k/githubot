@@ -21,6 +21,7 @@ libraryDependencies ++= (
     ("org.twitter4j" % "twitter4j-core" % twitter4jVersion) ::
     ("io.argonaut" %% "argonaut" % "6.2.1") ::
     ("org.scalaj" %% "scalaj-http" % "2.3.0") ::
+    ("com.novocode" % "junit-interface" % "0.11" % "test") ::
     Nil
 )
 
