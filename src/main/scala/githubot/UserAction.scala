@@ -55,6 +55,8 @@ object UserAction {
   private[this] val escapeMap = Map(
     "@" -> "🍥",
     "\\.md" -> "_md",
+    "\\.sh" -> "_sh",
+    "\\.py" -> "_py",
     "\\.java" -> "_java",
     "of github.com:" -> "of github_com:"
   )
