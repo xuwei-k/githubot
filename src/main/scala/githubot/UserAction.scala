@@ -58,6 +58,7 @@ object UserAction {
     "\\.sh" -> "_sh",
     "\\.py" -> "_py",
     "\\.java" -> "_java",
+    "\\.Final" -> "_Final",
     "of github.com:" -> "of github_com:"
   )
 
