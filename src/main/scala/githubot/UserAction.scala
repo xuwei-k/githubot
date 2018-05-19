@@ -39,15 +39,9 @@ final case class UserAction(
     val result = loop(UserAction.escape(StringEscapeUtils.unescapeXml(content).replaceAll("\\<[^>]*>", "")))
     val lines = result.lines.filterNot { s =>
       title.contains(s) || s.contains(title) || s.forall(gitHash)
-    }.toList
+    }.toList.distinct
 
-    {
-      if (lines.nonEmpty) {
-        lines.init
-      } else {
-        lines
-      }
-    }.mkString("\n")
+    lines.mkString("\n")
   }
 }
 
