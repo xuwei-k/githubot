@@ -20,7 +20,7 @@ libraryDependencies ++= (
     ("com.github.xuwei-k" % "html2image" % "0.1.0") ::
     ("org.twitter4j" % "twitter4j-core" % twitter4jVersion) ::
     ("io.argonaut" %% "argonaut" % "6.2.3") ::
-    ("org.scalaj" %% "scalaj-http" % "2.4.1") ::
+    ("org.scalaj" %% "scalaj-http" % "2.4.2") ::
     ("com.novocode" % "junit-interface" % "0.11" % "test") ::
     Nil
 )
