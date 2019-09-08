@@ -8,8 +8,6 @@ resolvers ++= Seq(
 
 licenses := Seq("MIT License" -> url("http://www.opensource.org/licenses/mit-license.php"))
 
-resolvers += Opts.resolver.sonatypeReleases
-
 scalaVersion := "2.12.7"
 
 val twitter4jVersion = "4.0.7"
