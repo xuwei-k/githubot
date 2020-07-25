@@ -14,7 +14,7 @@ val twitter4jVersion = "4.0.7"
 
 libraryDependencies ++= (
   ("org.scala-lang" % "scala-compiler" % scalaVersion.value) ::
-    ("org.apache.commons" % "commons-text" % "1.8") ::
+    ("org.apache.commons" % "commons-text" % "1.9") ::
     ("com.github.xuwei-k" % "html2image" % "0.1.0") ::
     ("org.twitter4j" % "twitter4j-core" % twitter4jVersion) ::
     ("io.argonaut" %% "argonaut" % "6.3.0") ::
