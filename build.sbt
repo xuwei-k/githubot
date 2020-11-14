@@ -8,28 +8,26 @@ scalaVersion := "2.12.8"
 
 val twitter4jVersion = "4.0.7"
 
-libraryDependencies ++= (
-  ("org.scala-lang" % "scala-compiler" % scalaVersion.value) ::
-    ("org.apache.commons" % "commons-text" % "1.9") ::
-    ("com.github.xuwei-k" % "html2image" % "0.1.0") ::
-    ("org.twitter4j" % "twitter4j-core" % twitter4jVersion) ::
-    ("io.argonaut" %% "argonaut" % "6.3.1") ::
-    ("org.scalaj" %% "scalaj-http" % "2.4.2") ::
-    ("com.novocode" % "junit-interface" % "0.11" % "test") ::
-    Nil
+libraryDependencies ++= Seq(
+  "org.scala-lang" % "scala-compiler" % scalaVersion.value,
+  "org.apache.commons" % "commons-text" % "1.9",
+  "com.github.xuwei-k" % "html2image" % "0.1.0",
+  "org.twitter4j" % "twitter4j-core" % twitter4jVersion,
+  "io.argonaut" %% "argonaut" % "6.3.1",
+  "org.scalaj" %% "scalaj-http" % "2.4.2",
+  "com.novocode" % "junit-interface" % "0.11" % "test"
 )
 
 val unusedWarnings = "-Ywarn-unused" :: Nil
 
-scalacOptions ++= (
-  "-deprecation" ::
-    "-unchecked" ::
-    "-Xlint" ::
-    "-language:postfixOps" ::
-    "-language:existentials" ::
-    "-language:higherKinds" ::
-    "-language:implicitConversions" ::
-    Nil
+scalacOptions ++= List(
+  "-deprecation",
+  "-unchecked",
+  "-Xlint",
+  "-language:postfixOps",
+  "-language:existentials",
+  "-language:higherKinds",
+  "-language:implicitConversions"
 ) ::: unusedWarnings
 
 Seq(Compile, Test).flatMap(c => scalacOptions in (c, console) --= unusedWarnings)
