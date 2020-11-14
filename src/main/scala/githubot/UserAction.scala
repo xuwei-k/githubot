@@ -25,9 +25,8 @@ final case class UserAction(
   private[this] def formattedContent: String = {
     @tailrec
     def loop(str: String): String = {
-      val replaced = UserAction.trimMap.foldLeft(str) {
-        case (s, (oldStr, newStr)) =>
-          s.replaceAll(oldStr, newStr)
+      val replaced = UserAction.trimMap.foldLeft(str) { case (s, (oldStr, newStr)) =>
+        s.replaceAll(oldStr, newStr)
       }
       if (replaced != str) {
         loop(replaced)
