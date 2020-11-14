@@ -2,7 +2,7 @@ name := "githubot"
 
 version := "0.2-SNAPSHOT"
 
-licenses := Seq("MIT License" -> url("http://www.opensource.org/licenses/mit-license.php"))
+licenses := Seq("MIT License" -> url("https://opensource.org/licenses/mit-license"))
 
 scalaVersion := "2.12.8"
 
