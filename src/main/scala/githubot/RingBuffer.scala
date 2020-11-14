@@ -1,6 +1,6 @@
 package githubot
 
-final class RingBuffer[A: reflect.ClassTag](maxSize: Int) extends Seq[A] {
+final class RingBuffer[A: reflect.ClassTag](maxSize: Int) extends Iterable[A] {
   private[this] val array = new Array[A](maxSize)
   private[this] var read = 0
   private[this] var write = 0
@@ -38,10 +38,10 @@ final class RingBuffer[A: reflect.ClassTag](maxSize: Int) extends Seq[A] {
     for (elem <- iter) this += elem
   }
 
-  override def iterator = new Iterator[A] {
+  override def iterator: Iterator[A] = new Iterator[A] {
     var idx = 0
     def hasNext = idx != count_
-    def next = {
+    def next() = {
       val res = apply(idx)
       idx += 1
       res
