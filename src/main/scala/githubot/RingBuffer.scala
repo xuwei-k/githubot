@@ -21,7 +21,7 @@ final class RingBuffer[A: reflect.ClassTag](maxSize: Int) extends Seq[A] {
    * Adds an element, possibly overwriting the oldest elements in the buffer
    * if the buffer is at capacity.
    */
-  def +=(elem: A) {
+  def +=(elem: A): Unit = {
     array(write) = elem
     write = (write + 1) % maxSize
     if (count_ == maxSize) read = (read + 1) % maxSize
@@ -34,7 +34,7 @@ final class RingBuffer[A: reflect.ClassTag](maxSize: Int) extends Seq[A] {
    * buffer can hold, then only the last maxSize elements will end up in
    * the buffer.
    */
-  def ++=(iter: Iterable[A]) {
+  def ++=(iter: Iterable[A]): Unit = {
     for (elem <- iter) this += elem
   }
 
