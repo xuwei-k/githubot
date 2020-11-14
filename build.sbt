@@ -2,10 +2,6 @@ name := "githubot"
 
 version := "0.2-SNAPSHOT"
 
-resolvers ++= Seq(
-  "twitter4j repository" at "http://twitter4j.org/maven2"
-)
-
 licenses := Seq("MIT License" -> url("http://www.opensource.org/licenses/mit-license.php"))
 
 scalaVersion := "2.12.8"
