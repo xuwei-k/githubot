@@ -4,11 +4,12 @@ version := "0.2-SNAPSHOT"
 
 licenses := Seq("MIT License" -> url("https://opensource.org/licenses/mit-license"))
 
-scalaVersion := "2.12.8"
+scalaVersion := "2.12.12"
 
 val twitter4jVersion = "4.0.7"
 
 libraryDependencies ++= Seq(
+  "org.scala-lang.modules" %% "scala-xml" % "1.3.0",
   "org.scala-lang" % "scala-compiler" % scalaVersion.value,
   "org.apache.commons" % "commons-text" % "1.9",
   "com.github.xuwei-k" % "html2image" % "0.1.0",
