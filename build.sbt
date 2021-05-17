@@ -4,7 +4,7 @@ version := "0.2-SNAPSHOT"
 
 licenses := Seq("MIT License" -> url("https://opensource.org/licenses/mit-license"))
 
-scalaVersion := "2.13.4"
+scalaVersion := "2.13.6"
 
 val twitter4jVersion = "4.0.7"
 
