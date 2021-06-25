@@ -14,7 +14,7 @@ libraryDependencies ++= Seq(
   "org.apache.commons" % "commons-text" % "1.9",
   "com.github.xuwei-k" % "html2image" % "0.1.0",
   "org.twitter4j" % "twitter4j-core" % twitter4jVersion,
-  "io.argonaut" %% "argonaut" % "6.3.4",
+  "io.argonaut" %% "argonaut" % "6.3.5",
   "org.scalaj" %% "scalaj-http" % "2.4.2",
   "com.novocode" % "junit-interface" % "0.11" % "test"
 )
