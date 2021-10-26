@@ -16,7 +16,7 @@ libraryDependencies ++= Seq(
   "org.twitter4j" % "twitter4j-core" % twitter4jVersion,
   "io.argonaut" %% "argonaut" % "6.3.7",
   "org.scalaj" %% "scalaj-http" % "2.4.2",
-  "com.novocode" % "junit-interface" % "0.11" % "test"
+  "com.github.sbt" % "junit-interface" % "0.13.2" % "test"
 )
 
 val unusedWarnings = "-Ywarn-unused" :: Nil
