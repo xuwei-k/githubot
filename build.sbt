@@ -33,12 +33,12 @@ scalacOptions ++= List(
 
 Seq(Compile, Test).flatMap(c => scalacOptions in (c, console) --= unusedWarnings)
 
-assemblyJarName in assembly := {
+assembly / assemblyJarName := {
   val df = new java.text.SimpleDateFormat("yyyy-MM-dd-HH-mm")
   s"${name.value}-${df.format(new java.util.Date)}-twitter4j-${twitter4jVersion}.jar"
 }
 
-resourceGenerators in Compile += task(
+Compile / resourceGenerators += task(
   Seq(baseDirectory.value / "build.sbt")
 )
 
