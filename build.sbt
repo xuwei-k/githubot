@@ -31,7 +31,7 @@ scalacOptions ++= List(
   "-language:implicitConversions"
 ) ::: unusedWarnings
 
-Seq(Compile, Test).flatMap(c => scalacOptions in (c, console) --= unusedWarnings)
+Seq(Compile, Test).flatMap(c => (c / console / scalacOptions) --= unusedWarnings)
 
 assembly / assemblyJarName := {
   val df = new java.text.SimpleDateFormat("yyyy-MM-dd-HH-mm")
