@@ -1,20 +1,20 @@
 package githubot
 
 import java.io.InputStream
-import twitter4j._
-import twitter4j.conf._
+import twitter4j.Twitter
+import twitter4j.v1.StatusUpdate
 
 final case class TweetClient(conf: TwitterSettings) {
 
   val t = {
-    val c = new ConfigurationBuilder
-    c.setDebugEnabled(true)
-      .setOAuthConsumerKey(conf.consumerKey)
-      .setOAuthConsumerSecret(conf.consumerSecret)
-      .setOAuthAccessToken(conf.accessToken)
-      .setOAuthAccessTokenSecret(conf.accessTokenSecret);
-
-    new TwitterFactory(c.build()).getInstance()
+    Twitter
+      .newBuilder()
+      .prettyDebugEnabled(true)
+      .oAuthConsumer(conf.consumerKey, conf.consumerSecret)
+      .oAuthAccessToken(conf.accessToken, conf.accessTokenSecret)
+      .build()
+      .v1()
+      .tweets()
   }
 
   def tweet(a: UserAction, image: Option[InputStream]): Unit = {
@@ -23,7 +23,7 @@ final case class TweetClient(conf: TwitterSettings) {
         val tweet = a.tweetString
         image match {
           case Some(stream) =>
-            val status = new StatusUpdate(tweet).media("img", stream)
+            val status = StatusUpdate.of(tweet).media("img", stream)
             t.updateStatus(status)
           case None =>
             t.updateStatus(tweet)
